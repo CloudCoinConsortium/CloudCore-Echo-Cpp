@@ -10,3 +10,9 @@ User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like 
 
 **Example Response**  
 {"server":"RAIDA1","status":"ready","message":"Execution Time (milliseconds) = 0.892","version":"2018-04-25","time":"2019-01-15 00:08:21"}
+
+## References
+- Cloud Bank: https://github.com/CloudCoinConsortium/CloudBank-V2
+- RAIDA Advanced Client
+Servant Based Architecture: https://cloudcoinconsortium.org/software.html#echoer
+- C++ Style Guide and Naming Conventions: https://gist.github.com/lefticus/10191322
