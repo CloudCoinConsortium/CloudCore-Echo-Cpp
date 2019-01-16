@@ -15,11 +15,15 @@ string curl_data; //will hold the url's contents
  */
 size_t write_data(char *buffer, size_t size, size_t nmemb, void *userp)
 {
+	curl_data.clear();
 	for (unsigned int c = 0; c < (size * nmemb); c++)
 		curl_data.push_back(buffer[c]); 
 	return size * nmemb;
 }
 
+/**
+ * Sends a GET request to GET https://raida1.cloudcoin.global/service/echo
+ */
 void Raida::echo()
 {
 	CURL* curl; //our curl object
@@ -34,16 +38,27 @@ void Raida::echo()
 
 	if (curl)
 	{
+		// set URL
 		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+		// send all data to this function
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &write_data);
+		#ifdef SKIP_PEER_VERIFICATION
+			curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
+		#endif
+
+		#ifdef SKIP_HOSTNAME_VERIFICATION
+			curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+		#endif
 	}
 	
 
-	curl_data = "";
+	// clear data from any previous calls
+	curl_data.clear();
 	/* Perform the request, res will get the return code */ 
 	res = curl_easy_perform(curl);
 
-	cout << "Response: " << curl_data;
+	m_https_response = curl_data;
+	cout << m_index << "\n";
 
 	curl_easy_cleanup(curl);
 	curl_global_cleanup();
